@@ -16,6 +16,7 @@ Este projeto é composto por três partes principais:
 Execute na raiz do repositório:
 
 docker compose build
+
 docker compose up -d
 
 
