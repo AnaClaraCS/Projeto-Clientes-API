@@ -1,0 +1,75 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: clientesapi-db
+    environment:
+      POSTGRES_DB: clientesapi_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: senha
+    ports:
+      - "5436:5432"
+    volumes:
+      - clientesapi_postgres_data:/var/lib/postgresql/data
+    networks:
+      - clientesapi-network
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      - 'RABBITMQ_DEFAULT_PASS=secret'
+      - 'RABBITMQ_DEFAULT_USER=myuser'
+    container_name: clientes-rabbitmq
+    ports:
+    - "5672:5672"
+    - "15672:15672"
+    networks:
+    - clientesapi-network
+  clientesapi:
+    build:
+      context: ./clientesApi
+    container_name: clientesapi
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://clientesapi-db:5432/clientesapi_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: senha
+      SPRING_RABBITMQ_HOST: clientes-rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: myuser
+      SPRING_RABBITMQ_PASSWORD: secret
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - rabbitmq
+    networks:
+      - clientesapi-network
+  email-cliente-api:
+    build:
+      context: ./email-cliente-api
+    container_name: email-cliente-api
+    environment:
+      SPRING_RABBITMQ_HOST: clientes-rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: myuser
+      SPRING_RABBITMQ_PASSWORD: secret
+    ports:
+      - "8081:8081"
+    depends_on:
+      - rabbitmq
+    networks:
+      - clientesapi-network
+  clientes-app:
+    build:
+      context: ./clientes-app
+    container_name: clientes-app
+    ports:
+      - "4200:80"
+    depends_on:
+      - clientesapi
+    networks:
+      - clientesapi-network
+
+volumes:
+  clientesapi_postgres_data:
+networks:
+  clientesapi-network:
+    driver: bridge
