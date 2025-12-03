@@ -1,0 +1,9 @@
+<h1>Editar Cliente</h1>
+
+<form [formGroup]="formCliente" (ngSubmit)="onSubmit()">
+  <app-cliente-form [formCliente]="formCliente"></app-cliente-form>
+
+  <div class="d-flex justify-content-center m-4">
+    <button type="submit" class="btn btn-primary"  [disabled]="!formCliente.valid">Salvar</button>
+  </div>
+</form>

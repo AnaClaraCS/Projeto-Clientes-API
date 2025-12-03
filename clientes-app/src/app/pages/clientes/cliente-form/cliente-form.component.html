@@ -1,0 +1,88 @@
+<!-- <form class="g-3 needs-validation" [formGroup]="formCliente" (ngSubmit)="onSubmit()"> -->
+<div [formGroup]="formCliente">
+
+  <div class="row" >
+    <div class="form-group m-2 has-validation ng-valid ng-invalid">
+      <label for="nome">Nome: </label>
+      <input 
+        type="text" 
+        class="form-control"
+        formControlName="nome"
+        placeholder="Nome completo"
+        [class.is-invalid]="formCliente.get('nome')?.invalid && formCliente.get('nome')?.touched"
+        [class.is-valid]="formCliente.get('nome')?.valid && formCliente.get('nome')?.touched"
+      >
+      <div class="invalid-feedback" *ngIf="formCliente.get('nome')?.hasError('required') && formCliente.get('nome')?.touched">
+        O nome é obrigatório.
+      </div>
+      <div class="invalid-feedback" *ngIf="formCliente.get('nome')?.hasError('minlength') && formCliente.get('nome')?.touched">
+        O nome deve ter pelo menos 8 caracteres.
+      </div>
+      <div class="invalid-feedback" *ngIf="formCliente.get('nome')?.hasError('maxlength') && formCliente.get('nome')?.touched">
+        O nome pode ter no máximo 100 caracteres.
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="form-group m-2">
+      <label for="email">Email:</label>
+      <input 
+        type="email" 
+        class="form-control" 
+        formControlName="email"
+        placeholder="seu-email@email.com" 
+        [class.is-invalid]="formCliente.get('email')?.invalid && formCliente.get('email')?.touched"
+        [class.is-valid]="formCliente.get('email')?.valid && formCliente.get('email')?.touched"
+      >
+      <div class="invalid-feedback" *ngIf="formCliente.get('email')?.hasError('required') && formCliente.get('email')?.touched">
+        O email é obrigatório.
+      </div>
+      <div class="invalid-feedback" *ngIf="formCliente.get('email')?.hasError('email') && formCliente.get('email')?.touched">
+        O email deve ter um formato válido.
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="form-group m-2 col">
+      <label for="cpf">CPF: </label>
+      <input 
+        type="text" 
+        class="form-control" 
+        formControlName="cpf" 
+        placeholder="999.999.999-99"
+        mask=CPF_CNPJ
+        [class.is-invalid]="formCliente.get('cpf')?.invalid && formCliente.get('cpf')?.touched"
+        [class.is-valid]="formCliente.get('cpf')?.valid && formCliente.get('cpf')?.touched"
+      >
+      <div class="invalid-feedback" *ngIf="formCliente.get('cpf')?.hasError('required') && formCliente.get('cpf')?.touched">
+        O cpf é obrigatório.
+      </div>
+      <div class="invalid-feedback" 
+        *ngIf="(formCliente.get('cpf')?.hasError('pattern') || 
+          formCliente.get('cpf')?.hasError('minlength') ||
+          formCliente.get('cpf')?.hasError('maxlength')
+        ) && formCliente.get('cpf')?.touched">
+        O cpf deve ter exatamente 11 digitos.
+      </div>
+    </div>
+  
+    <div class="form-group m-2 col">
+      <label for="data-nascimento">Data de nascimento:</label>
+      <input 
+        type="date" 
+        class="form-control" 
+        formControlName="dataNascimento"
+        placeholder="dd/mm/aaaa"
+        [class.is-invalid]="formCliente.get('dataNascimento')?.invalid && formCliente.get('dataNascimento')?.touched"
+        [class.is-valid]="formCliente.get('dataNascimento')?.valid && formCliente.get('dataNascimento')?.touched"
+      >
+      <div class="invalid-feedback" *ngIf="formCliente.get('dataNascimento')?.hasError('required') && formCliente.get('email')?.touched">
+        A data de nascimento é obrigatória.
+      </div>
+    </div>
+  </div>
+</div>
+
+

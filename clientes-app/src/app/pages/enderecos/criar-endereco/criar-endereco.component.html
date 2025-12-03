@@ -1,0 +1,10 @@
+<h1>Cadastro de Endereço</h1>
+
+<form [formGroup]="formEndereco" (ngSubmit)="onSubmit()">
+
+  <app-form-endereco [formEndereco]="formEndereco"></app-form-endereco>
+
+  <div class="d-flex justify-content-center m-4">
+    <button type="submit" class="btn btn-primary"  [disabled]="!formEndereco.valid">Salvar</button>
+  </div>
+</form>

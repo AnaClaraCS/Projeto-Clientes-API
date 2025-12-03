@@ -1,0 +1,49 @@
+<h1>Lista de Clientes</h1>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th scope="col">Nome</th>
+			<th scope="col">Email</th>
+			<th scope="col">CPF</th>
+			<th scope="col">Data de nascimento</th>
+			<th scope="col">Ação</th>
+		</tr>
+	</thead>
+	<tbody>
+		@for (cliente of clientes$ | async; track cliente.id; let i = $index) {
+			<tr>
+				<td>{{ cliente.nome }}</td>
+				<td>{{ cliente.email}}</td>
+				<td>{{ cliente.cpf}}</td>
+				<td>{{ cliente.dataNascimento}}</td>
+				<td>
+					<button class="btn btn-primary btn-sm me-2" (click)="verCliente(cliente.id)">Ver</button>
+				</td>
+
+			</tr>
+		}
+	</tbody>
+</table>
+
+
+<div class="row">
+	<div class="col">	
+		<ngb-pagination
+		  [collectionSize]="totalItems"   
+		  [(page)]="page"
+		  [pageSize]="pageSize"           
+		  [boundaryLinks]="true"
+		  (pageChange)="onPageChange($event)"
+		/>
+	</div>
+	<div class="col d-flex justify-content-end">	
+		<select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize" (ngModelChange)="onPageSizeChange($event)">
+			@for (valor of [5,10,15,20]; track valor) {
+				<option value="{{valor}}">{{valor}} itens por página</option>
+			}
+		</select>
+	</div>
+</div>
+
+

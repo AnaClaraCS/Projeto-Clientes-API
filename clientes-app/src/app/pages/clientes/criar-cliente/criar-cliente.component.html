@@ -1,0 +1,11 @@
+<h1>Cadastro de Cliente</h1>
+
+<form [formGroup]="formCliente" (ngSubmit)="onSubmit()">
+  <app-cliente-form [formCliente]="formCliente"></app-cliente-form>
+
+  <app-form-endereco [formEndereco]="enderecoForm"></app-form-endereco>
+
+  <div class="d-flex justify-content-center m-4">
+    <button type="submit" class="btn btn-primary" [disabled]="!formCliente.valid">Salvar</button>
+  </div>
+</form>

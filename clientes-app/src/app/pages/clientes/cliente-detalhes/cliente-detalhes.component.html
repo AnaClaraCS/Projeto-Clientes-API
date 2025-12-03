@@ -1,0 +1,33 @@
+@if (cliente) {
+<div class="">
+
+  <div class="row">
+
+    <div class="col-10">
+      <h2>{{ cliente.nome }}</h2>
+      <p>Email: {{ cliente.email }}</p>
+      <p>CPF: {{ cliente.cpf }}</p>
+      <p>Data de nascimento: {{ cliente.dataNascimento }}</p>
+    </div>
+
+    <div class="col-2 d-flex vstack gap-3">
+      
+      <button class="btn btn-primary" [routerLink]="['/clientes/editar', cliente.id]">
+        Editar
+      </button>
+      
+      <button class="btn btn-danger" (click)="deletarCliente(cliente.id)">
+        Deletar
+      </button>
+      
+      <button class="btn btn-primary" [routerLink]="['/clientes/enderecos/novo', cliente.id]">
+        Novo endereço
+      </button>
+      
+    </div>
+
+  </div>
+</div>
+
+  <app-listar-enderecos [enderecos]="cliente.enderecos"></app-listar-enderecos>
+}
